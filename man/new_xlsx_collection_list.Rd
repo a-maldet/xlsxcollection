@@ -4,16 +4,18 @@
 \alias{new_xlsx_collection_list}
 \title{Create an \code{xlsx_collection_list} class object.}
 \usage{
-new_xlsx_collection_list(obj)
+new_xlsx_collection_list(obj, ...)
 }
 \arguments{
-\item{obj}{A list holding the items.}
+\item{obj}{One can eather pass a list of items or a singe item.}
+
+\item{...}{additional \link[=new_xlsx_collection_item]{xlsx_collection_item} class objects.}
 }
 \value{
-A \code{xlsx_collection_list} class object.
+A \code{xlsx_collection_list} class object holding all items.
 }
 \description{
-These class objects bundle mutliple
-\link[=new_xlsx_collection_item]{xlsx_collection_item} in a single
-kind of list class object.
+Bundles mutliple
+\link[=new_xlsx_collection_item]{xlsx_collection_item} into a single
+object of class \code{xlsx_collection_list}.
 }

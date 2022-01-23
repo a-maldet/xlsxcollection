@@ -4,13 +4,22 @@ NULL
 #' Create an xlsx collection item
 #' 
 #' This create a `xlsx_collection_item` class object, which can be used
-#' in order to store a singel StyledTable.
+#' in order to store a singel StyledTable together with caption,
+#' footer and sheet name.
 #' @param st A [StyledTable][styledTables::styled_table()] class ojbect, which
 #'   should be stored.
+#' @param sheet_name A string, which should be used as xlsx sheet name.
+#'   In case this tables origin from a LaTeX table and you want to use
+#'   the LaTeX counter later on, you must pass the LaTeX label of the table
+#'   to the `sheet_name` argument. When you call
+#'   [xlsx_collection_use_latex_table_counter()] the stored `sheet_name` property
+#'   will be compared with the LaTeX labels found in the `aux`-file of the
+#'   LaTeX report.
 #' @param caption A caption string for the table.
 #' @param sheet_name A string used as sheet name, when the table is written
 #'   to an xlsx file.
 #' @param footer A string used as table footer.
+#' @export
 new_xlsx_collection_item <- function(
   st,
   caption,
@@ -82,14 +91,28 @@ validate_xlsx_collection_item <- function(
 
 #' Create an `xlsx_collection_list` class object.
 #' 
-#' These class objects bundle mutliple
-#' [xlsx_collection_item][new_xlsx_collection_item()] in a single
-#' kind of list class object.
-#' @param obj A list holding the items.
-#' @return A `xlsx_collection_list` class object.
-new_xlsx_collection_list <- function(
-  obj
-) {
+#' Bundles mutliple
+#' [xlsx_collection_item][new_xlsx_collection_item()] into a single
+#' object of class `xlsx_collection_list`.
+#' @param obj One can eather pass a list of items or a singe item.
+#' @param ... additional [xlsx_collection_item][new_xlsx_collection_item()] class objects.
+#' @return A `xlsx_collection_list` class object holding all items.
+#' @export
+new_xlsx_collection_list <- function(obj, ...) {
+  UseMethod("new_xlsx_collection_list")
+}
+
+#' @export
+new_xlsx_collection_list.xlsx_collection_item <- function(obj, ...) {
+  obj <- c(
+    obj,
+    list(...)
+  ) %>%
+    new_xlsx_collection_list
+}
+
+#' @export
+new_xlsx_collection_list.default <- function(obj, ...) {
   validate_xlsx_collection_list(
     obj,
     validate_class = FALSE,

@@ -11,9 +11,15 @@ NULL
 #'   takes the following arguments:
 #'   - `st`: The [StyledTable][styledTables::styled_table()] class object,
 #'     which should be stored.
+#'   - `sheet_name`: A string, which should be used as xlsx sheet name.
+#'     In case this tables origin from a LaTeX table and you want to use
+#'     the LaTeX counter later on, you must pass the LaTeX label of the table
+#'     to the `sheet_name` argument. When you call
+#'     [xlsx_collection_use_latex_table_counter()] the stored `sheet_name` property
+#'     will be compared with the LaTeX labels found in the `aux`-file of the
+#'     LaTeX report.
 #'   - `caption`: A string, which should be used as table caption.
 #'   - `footer`: A string, which should be used as table footer.
-#'   - `sheet_name`: A string, which should be used as xlsx sheet name.
 #' @seealso [xlsx_collection_list_stored_tables()],
 #'   [xlsx_collection_read_stored_tables()],
 #'   [xlsx_collection_use_latex_table_counter()],

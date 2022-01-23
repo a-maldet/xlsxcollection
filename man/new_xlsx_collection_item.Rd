@@ -19,5 +19,6 @@ to an xlsx file.}
 }
 \description{
 This create a \code{xlsx_collection_item} class object, which can be used
-in order to store a singel StyledTable.
+in order to store a singel StyledTable together with caption,
+footer and sheet name.
 }

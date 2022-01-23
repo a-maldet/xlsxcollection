@@ -17,9 +17,15 @@ takes the following arguments:
 \itemize{
 \item \code{st}: The \link[styledTables:StyledTable-styled_table-method]{StyledTable} class object,
 which should be stored.
+\item \code{sheet_name}: A string, which should be used as xlsx sheet name.
+In case this tables origin from a LaTeX table and you want to use
+the LaTeX counter later on, you must pass the LaTeX label of the table
+to the \code{sheet_name} argument. When you call
+\code{\link[=xlsx_collection_use_latex_table_counter]{xlsx_collection_use_latex_table_counter()}} the stored \code{sheet_name} property
+will be compared with the LaTeX labels found in the \code{aux}-file of the
+LaTeX report.
 \item \code{caption}: A string, which should be used as table caption.
 \item \code{footer}: A string, which should be used as table footer.
-\item \code{sheet_name}: A string, which should be used as xlsx sheet name.
 }
 }
 \description{
