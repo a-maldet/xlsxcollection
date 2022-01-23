@@ -1,0 +1,35 @@
+Package: xlsxcollection
+Type: Package
+Title: Collect All StyledTables Of A Report In A Single Excel File
+Version: 1.0.0
+Authors@R: c(person("Adrian", "Maldet", email = "adrian.maldet@tirol.gv.at", role = c("aut", "cre")))
+Maintainers@R: c(person("Adrian", "Maldet", email = "adrian.maldet@tirol.gv.at", role = c("aut", "cre")))
+Description: Creates a single xlsx file holding all styledTables created in a
+  report (rnw or rmd).
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    utils (>= 4.0.3),
+    magrittr (>= 2.0.1),
+    tlscomposerr,
+    xlsx (>= 0.6.5),
+    rJava (>= 1.0-4),
+    styledTables (>= 2.2.0),
+    tlsgeneralutils (>= 1.0.0)
+Suggests: 
+    testthat (>= 3.0.0),
+    roxygen2 (>= 7.1.1),
+    knitr,
+    rmarkdown
+Config/testthat/edition: 3
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+VignetteBuilder: knitr
+Collate: 
+    'import.R'
+    'xlsx_collection_list.R'
+    'store_tables.R'
+    'write_to_excel.R'
+Depends: 
+    R (>= 2.10)

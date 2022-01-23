@@ -1,0 +1,92 @@
+---
+title: "xlsxcollection"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{xlsxcollection}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(xlsxcollection)
+```
+
+This package is used in order to write multiple StyledTables to
+a single XLSX file including a table of contents sheet.
+This packages uses the `styledTalbes` and the `xlsx` package.
+
+# Installation
+
+```{r eval = FALSE}
+tlsminicran::install_pkgs("xlsxcollection", args = "--no-multiarch")
+```
+
+# Usage
+
+## Storing multiple StyledTables
+
+```{r eval = FALSE}
+library(styledTables)
+library(xlsx)
+library(xlsxcollection)
+
+# assume we have 3 StyledTable objects
+st1 <- styled_table(matrix(11:13))
+st1 <- styled_table(matrix(21:23))
+st3 <- styled_table(matrix(31:33))
+
+# init storage function
+dir.create("tables_dir")
+store_st <- xlsx_collection_init_store_table("./tables_dir")
+
+# store the tables
+store_st(
+  st = st1,
+  sheet_name = "pop",
+  caption = "Population since 2010"
+)
+store_st(
+  st = st2,
+  sheet_name = "birth",
+  caption = "Childs birth since 2010",
+  footer = "No misscarriage included."
+)
+store_st(
+  st = st3,
+  sheet_name = "death",
+  caption = "Deaths since 2010"
+)
+
+cat("Stored files: ")
+cat(xlsx_collection_list_stored_tables("./tables_dir"))
+```
+
+## Read stored tables and create Excel file
+
+```{r eval = FALSE}
+# read stored tables
+xlsx_coll <- xlsx_collection_list_stored_tables("./tables_dir") %>%
+  xlsx_collection_read_stored_tables
+
+# !!! THE FOLLOWING CALL IS OPTIONAL !!!
+#  (only necessary when the tables were originated from a LaTeX report):
+# The following call reads an "aux"-file (this is a LaTeX file, which also holds
+# the table counters for labelled LaTeX tables) and uses the corresponding
+# LaTeX counters for the sheet names and table of contents.
+xlsx_coll <- xlsx_coll %>%
+  xlsx_collection_use_latex_table_counter("./my_report.aux")
+
+# Write the tables to an Excel file
+xlsx_coll %>%
+  xlsx_collection_create_excel(
+    xlsx_path = "./my_report.xlsx",
+    toc_header = "MY REPORT TABLES"
+  )
+```
