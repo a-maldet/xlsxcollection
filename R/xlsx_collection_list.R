@@ -60,7 +60,7 @@ validate_xlsx_collection_item <- function(
     err_h("The passed in object is not of class 'xlsx_collection_item'.")
   if (!is.list(obj))
     err_h("The object is not a list.")
-  missing_entries <- c("st", "caption", "sheet_name", "footer")
+  missing_entries <- c("st", "caption", "sheet_name")
   missing_entries <- missing_entries[!missing_entries %in% names(obj)]
   if (length(missing_entries) > 0)
     paste(
@@ -73,7 +73,7 @@ validate_xlsx_collection_item <- function(
     non_char_entries,
     function(val_name) {
       val <- obj[[val_name]]
-      !is.character(val) || length(val) != 1 || is.na(val)
+      !is.null(val) && (!is.character(val) || length(val) != 1 || is.na(val))
     }
   ) %>%
     unlist %>%
@@ -105,7 +105,7 @@ new_xlsx_collection_list <- function(obj, ...) {
 #' @export
 new_xlsx_collection_list.xlsx_collection_item <- function(obj, ...) {
   obj <- c(
-    obj,
+    list(obj),
     list(...)
   ) %>%
     new_xlsx_collection_list
