@@ -94,3 +94,38 @@ xlsx_coll %>%
     }
   )
 ```
+
+## Directly create collection (without storing) and create Excel file
+
+```{r eval = FALSE}
+# create collection object holding the tables
+xlsx_coll2 <- new_xlsx_collection_list(
+  new_xlsx_collection_item(
+    st = st1,
+    sheet_name = "pop",
+    caption = "Population since 2010"
+  ),
+  new_xlsx_collection_item(
+    st = st2,
+    sheet_name = "birth",
+    caption = "Childs birth since 2010",
+    footer = "No misscarriage included."
+  ),
+  new_xlsx_collection_item(
+    st = st3,
+    sheet_name = "death",
+    caption = "Deaths since 2010"
+  )
+)
+
+# Write the tables to an Excel file
+xlsx_coll2 %>%
+  xlsx_collection_create_excel(
+    xlsx_path = "./my_report.xlsx",
+    toc_caption = "MY REPORT TABLES",
+    toc_format = function(x) {
+      x %>%
+        set_excel_col_width(30, col_id = 1)
+    }
+  )
+```
