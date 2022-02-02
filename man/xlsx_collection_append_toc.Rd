@@ -4,7 +4,12 @@
 \alias{xlsx_collection_append_toc}
 \title{Append a table of contents sheet to the xlsx collection file}
 \usage{
-xlsx_collection_append_toc(wb, xlsx_collection_list, toc_header)
+xlsx_collection_append_toc(
+  wb,
+  xlsx_collection_list,
+  toc_header,
+  format_toc = NULL
+)
 }
 \arguments{
 \item{wb}{An \link[xlsx:Workbook]{xlsx-workbook}}
@@ -14,6 +19,11 @@ xlsx_collection_append_toc(wb, xlsx_collection_list, toc_header)
 the stored tables.}
 
 \item{toc_header}{A string used as caption for the table of contents.}
+
+\item{format_toc}{An optional function applying \code{styledTables} formatting
+commands to the \link[styledTables:StyledTable-styled_table-method]{StyledTable} class object
+holding the entire toc-table. If omitted, then no additional formatting
+is applied.}
 }
 \description{
 Append a table of contents sheet to the xlsx collection file

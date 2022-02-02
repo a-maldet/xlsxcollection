@@ -4,7 +4,12 @@
 \alias{xlsx_collection_create_excel}
 \title{Create an xlsx collection}
 \usage{
-xlsx_collection_create_excel(xlsx_collection_list, xlsx_path, toc_header)
+xlsx_collection_create_excel(
+  xlsx_collection_list,
+  xlsx_path,
+  toc_header,
+  format_toc = NULL
+)
 }
 \arguments{
 \item{xlsx_collection_list}{A \link[=new_xlsx_collection_list]{xlsx_collection_list}
@@ -13,6 +18,11 @@ class object, usually created by \code{\link[=xlsx_collection_read_stored_tables
 \item{xlsx_path}{File path of the xlsx file.}
 
 \item{toc_header}{A string used as caption for the table of contents.}
+
+\item{format_toc}{An optional function applying \code{styledTables} formatting
+commands to the \link[styledTables:StyledTable-styled_table-method]{StyledTable} class object
+holding the entire toc-table. If omitted, then no additional formatting
+is applied.}
 }
 \value{
 The file path given in \code{xlsx_path}.

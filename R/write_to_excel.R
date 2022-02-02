@@ -8,6 +8,10 @@ NULL
 #' @param xlsx_collection_list A [xlsx_collection_list][new_xlsx_collection_list()]
 #'   class object, usually created by [xlsx_collection_read_stored_tables()].
 #' @param toc_header A string used as caption for the table of contents.
+#' @param format_toc An optional function applying `styledTables` formatting
+#'   commands to the [StyledTable][styledTables::styled_table()] class object
+#'   holding the entire toc-table. If omitted, then no additional formatting
+#'   is applied.
 #' @return The file path given in `xlsx_path`.
 #' @export
 #' @seealso [xlsx_collection_list_stored_tables()],
@@ -19,13 +23,15 @@ NULL
 xlsx_collection_create_excel <- function(
   xlsx_collection_list,
   xlsx_path,
-  toc_header
+  toc_header,
+  format_toc = NULL
 ) {
   wb <- xlsx::createWorkbook()
   xlsx_collection_append_toc(
     wb,
     xlsx_collection_list = xlsx_collection_list,
-    toc_header = toc_header
+    toc_header = toc_header,
+    format_toc = format_toc
   )
   lapply(
     xlsx_collection_list,
@@ -100,7 +106,7 @@ xlsx_collection_append_table <- function(
 #' @param xlsx_collection_list An 
 #'   [xlsx_collection_list][new_xlsx_collection_list()] class object holding
 #'   the stored tables.
-#' @param toc_header A string used as caption for the table of contents.
+#' @inheritParams xlsx_collection_create_excel
 #' @export
 #' @seealso [xlsx_collection_list_stored_tables()],
 #'   [xlsx_collection_init_store_table()],
@@ -108,7 +114,12 @@ xlsx_collection_append_table <- function(
 #'   [xlsx_collection_use_latex_table_counter()],
 #'   [xlsx_collection_create_excel()],
 #'   [xlsx_collection_append_table()]
-xlsx_collection_append_toc <- function(wb, xlsx_collection_list, toc_header) {
+xlsx_collection_append_toc <- function(
+  wb,
+  xlsx_collection_list,
+  toc_header,
+  format_toc = NULL
+) {
   toc_sheet <- xlsx::createSheet(wb, "Inhalt")
   java_createHelper <- rJava::.jcall(
     obj = wb, 
@@ -137,6 +148,13 @@ xlsx_collection_append_toc <- function(wb, xlsx_collection_list, toc_header) {
     set_excel_font_size(12) %>%
     set_underline(1, col_id = 1) %>%
     set_font_color("blue", col_id = 1) %>%
+    {
+      if (!is.null(format_toc)) {
+        format_toc(.)
+      } else {
+        .
+      }
+    } %>%
     write_excel(toc_sheet, ., first_row = 3)
   rows <- xlsx::getRows(
     toc_sheet,
