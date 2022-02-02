@@ -7,11 +7,13 @@ NULL
 #' @param xlsx_path File path of the xlsx file.
 #' @param xlsx_collection_list A [xlsx_collection_list][new_xlsx_collection_list()]
 #'   class object, usually created by [xlsx_collection_read_stored_tables()].
-#' @param toc_header A string used as caption for the table of contents.
-#' @param format_toc An optional function applying `styledTables` formatting
+#' @param toc_caption An optional string used as caption for the table of contents.
+#' @param toc_format An optional function applying `styledTables` formatting
 #'   commands to the [StyledTable][styledTables::styled_table()] class object
 #'   holding the entire toc-table. If omitted, then no additional formatting
 #'   is applied.
+#' @param toc_include An logical flag, defining if the resulting excel file
+#'   should have a table of contents as first sheet.
 #' @return The file path given in `xlsx_path`.
 #' @export
 #' @seealso [xlsx_collection_list_stored_tables()],
@@ -23,16 +25,18 @@ NULL
 xlsx_collection_create_excel <- function(
   xlsx_collection_list,
   xlsx_path,
-  toc_header,
-  format_toc = NULL
+  toc_caption = NULL,
+  toc_format = NULL,
+  toc_include = TRUE
 ) {
   wb <- xlsx::createWorkbook()
-  xlsx_collection_append_toc(
-    wb,
-    xlsx_collection_list = xlsx_collection_list,
-    toc_header = toc_header,
-    format_toc = format_toc
-  )
+  if (isTRUE(toc_include))
+    xlsx_collection_append_toc(
+      wb,
+      xlsx_collection_list = xlsx_collection_list,
+      toc_caption = toc_caption,
+      toc_format = toc_format
+    )
   lapply(
     xlsx_collection_list,
     function(x) {
@@ -117,8 +121,8 @@ xlsx_collection_append_table <- function(
 xlsx_collection_append_toc <- function(
   wb,
   xlsx_collection_list,
-  toc_header,
-  format_toc = NULL
+  toc_caption = NULL,
+  toc_format = NULL
 ) {
   toc_sheet <- xlsx::createSheet(wb, "Inhalt")
   java_createHelper <- rJava::.jcall(
@@ -130,7 +134,7 @@ xlsx_collection_append_toc <- function(
     o = "org/apache/poi/common/usermodel/Hyperlink",
     name = "LINK_DOCUMENT"
   )
-  matrix(c(toc_header, ""), ncol = 1) %>%
+  matrix(c(toc_caption, ""), ncol = 1) %>%
     styled_table %>%
     set_bold(TRUE) %>%
     set_excel_font_name("Arial") %>%
@@ -149,8 +153,8 @@ xlsx_collection_append_toc <- function(
     set_underline(1, col_id = 1) %>%
     set_font_color("blue", col_id = 1) %>%
     {
-      if (!is.null(format_toc)) {
-        format_toc(.)
+      if (!is.null(toc_format)) {
+        toc_format(.)
       } else {
         .
       }
@@ -180,5 +184,5 @@ xlsx_collection_append_toc <- function(
       java_link
     )
   }
-  return(NULL)
+  invisible(NULL)
 }

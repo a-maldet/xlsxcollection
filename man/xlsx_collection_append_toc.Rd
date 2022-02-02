@@ -7,8 +7,8 @@
 xlsx_collection_append_toc(
   wb,
   xlsx_collection_list,
-  toc_header,
-  format_toc = NULL
+  toc_caption = NULL,
+  toc_format = NULL
 )
 }
 \arguments{
@@ -18,9 +18,9 @@ xlsx_collection_append_toc(
 \link[=new_xlsx_collection_list]{xlsx_collection_list} class object holding
 the stored tables.}
 
-\item{toc_header}{A string used as caption for the table of contents.}
+\item{toc_caption}{An optional string used as caption for the table of contents.}
 
-\item{format_toc}{An optional function applying \code{styledTables} formatting
+\item{toc_format}{An optional function applying \code{styledTables} formatting
 commands to the \link[styledTables:StyledTable-styled_table-method]{StyledTable} class object
 holding the entire toc-table. If omitted, then no additional formatting
 is applied.}

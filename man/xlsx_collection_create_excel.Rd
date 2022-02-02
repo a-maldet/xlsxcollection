@@ -7,8 +7,9 @@
 xlsx_collection_create_excel(
   xlsx_collection_list,
   xlsx_path,
-  toc_header,
-  format_toc = NULL
+  toc_caption = NULL,
+  toc_format = NULL,
+  toc_include = TRUE
 )
 }
 \arguments{
@@ -17,12 +18,15 @@ class object, usually created by \code{\link[=xlsx_collection_read_stored_tables
 
 \item{xlsx_path}{File path of the xlsx file.}
 
-\item{toc_header}{A string used as caption for the table of contents.}
+\item{toc_caption}{An optional string used as caption for the table of contents.}
 
-\item{format_toc}{An optional function applying \code{styledTables} formatting
+\item{toc_format}{An optional function applying \code{styledTables} formatting
 commands to the \link[styledTables:StyledTable-styled_table-method]{StyledTable} class object
 holding the entire toc-table. If omitted, then no additional formatting
 is applied.}
+
+\item{toc_include}{An logical flag, defining if the resulting excel file
+should have a table of contents as first sheet.}
 }
 \value{
 The file path given in \code{xlsx_path}.
