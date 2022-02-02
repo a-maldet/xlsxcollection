@@ -87,6 +87,10 @@ xlsx_coll <- xlsx_coll %>%
 xlsx_coll %>%
   xlsx_collection_create_excel(
     xlsx_path = "./my_report.xlsx",
-    toc_header = "MY REPORT TABLES"
+    toc_caption = "MY REPORT TABLES",
+    toc_format = function(x) {
+      x %>%
+        set_excel_col_width(30, col_id = 1)
+    }
   )
 ```
