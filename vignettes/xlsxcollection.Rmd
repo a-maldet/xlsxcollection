@@ -44,7 +44,7 @@ st3 <- styled_table(matrix(31:33))
 
 # init storage function
 dir.create("tables_dir")
-store_st <- xlsx_collection_init_store_table("./tables_dir")
+store_st <- xlsxcollection_init_store_table("./tables_dir")
 
 # store the tables
 store_st(
@@ -65,15 +65,15 @@ store_st(
 )
 
 cat("Stored files: ")
-cat(xlsx_collection_list_stored_tables("./tables_dir"))
+cat(xlsxcollection_list_stored_tables("./tables_dir"))
 ```
 
 ## Read stored tables and create Excel file
 
 ```{r eval = FALSE}
 # read stored tables
-xlsx_coll <- xlsx_collection_list_stored_tables("./tables_dir") %>%
-  xlsx_collection_read_stored_tables
+xlsx_coll <- xlsxcollection_list_stored_tables("./tables_dir") %>%
+  xlsxcollection_read_stored_tables
 
 # !!! THE FOLLOWING CALL IS OPTIONAL !!!
 #  (only necessary when the tables were originated from a LaTeX report):
@@ -81,11 +81,11 @@ xlsx_coll <- xlsx_collection_list_stored_tables("./tables_dir") %>%
 # the table counters for labelled LaTeX tables) and uses the corresponding
 # LaTeX counters for the sheet names and table of contents.
 xlsx_coll <- xlsx_coll %>%
-  xlsx_collection_use_latex_table_counter("./my_report.aux")
+  xlsxcollection_use_latex_table_counter("./my_report.aux")
 
 # Write the tables to an Excel file
 xlsx_coll %>%
-  xlsx_collection_create_excel(
+  xlsxcollection_create_excel(
     xlsx_path = "./my_report.xlsx",
     toc_caption = "MY REPORT TABLES",
     toc_format = function(x) {
@@ -99,19 +99,19 @@ xlsx_coll %>%
 
 ```{r eval = FALSE}
 # create collection object holding the tables
-xlsx_coll2 <- new_xlsx_collection_list(
-  new_xlsx_collection_item(
+xlsx_coll2 <- new_xlsxcollection_list(
+  new_xlsxcollection_item(
     st = st1,
     sheet_name = "pop",
     caption = "Population since 2010"
   ),
-  new_xlsx_collection_item(
+  new_xlsxcollection_item(
     st = st2,
     sheet_name = "birth",
     caption = "Childs birth since 2010",
     footer = "No misscarriage included."
   ),
-  new_xlsx_collection_item(
+  new_xlsxcollection_item(
     st = st3,
     sheet_name = "death",
     caption = "Deaths since 2010"
@@ -120,7 +120,7 @@ xlsx_coll2 <- new_xlsx_collection_list(
 
 # Write the tables to an Excel file
 xlsx_coll2 %>%
-  xlsx_collection_create_excel(
+  xlsxcollection_create_excel(
     xlsx_path = "./my_report.xlsx",
     toc_caption = "MY REPORT TABLES",
     toc_format = function(x) {

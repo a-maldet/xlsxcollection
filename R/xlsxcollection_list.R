@@ -1,9 +1,9 @@
-#' @include import.R
+#' @include import.R xlsxcollection_item.R
 NULL
 
 #' Create an xlsx collection item
 #' 
-#' This create a `xlsx_collection_item` class object, which can be used
+#' This create a `xlsxcollection_item` class object, which can be used
 #' in order to store a singel StyledTable together with caption,
 #' footer and sheet name.
 #' @param st A [StyledTable][styledTables::styled_table()] class ojbect, which
@@ -12,7 +12,7 @@ NULL
 #'   In case this tables origin from a LaTeX table and you want to use
 #'   the LaTeX counter later on, you must pass the LaTeX label of the table
 #'   to the `sheet_name` argument. When you call
-#'   [xlsx_collection_use_latex_table_counter()] the stored `sheet_name` property
+#'   [xlsxcollection_use_latex_table_counter()] the stored `sheet_name` property
 #'   will be compared with the LaTeX labels found in the `aux`-file of the
 #'   LaTeX report.
 #' @param caption A caption string for the table.
@@ -20,7 +20,7 @@ NULL
 #'   to an xlsx file.
 #' @param footer A string used as table footer.
 #' @export
-new_xlsx_collection_item <- function(
+new_xlsxcollection_item <- function(
   st,
   caption,
   sheet_name,
@@ -33,31 +33,31 @@ new_xlsx_collection_item <- function(
       sheet_name = sheet_name,
       footer = footer
     ),
-    class = "xlsx_collection_item"
+    class = "xlsxcollection_item"
   )  
 }
 
-#' Validate the [xlsx_collection_item][new_xlsx_collection_item()] class object
+#' Validate the [xlsxcollection_item][new_xlsxcollection_item()] class object
 #' 
 #' @param obj The object, which should be validated.
 #' @param validate_class A logical flag, defining if the class string should
 #'   also be evaluated.
 #' @param err_h An error handling function.
-validate_xlsx_collection_item <- function(
+validate_xlsxcollection_item <- function(
   obj,
   validate_class = TRUE,
-  err_h = composerr("Invalid 'xlsx_collection_item'")
+  err_h = composerr("Invalid 'xlsxcollection_item'")
 ) {
   err_h <- composerr(
     err_prior = err_h,
-    text_1 = "The passed in object is not a valid 'xlsx_collection_item'",
+    text_1 = "The passed in object is not a valid 'xlsxcollection_item'",
     text_2 = paste(
-      "Please use the function 'new_xlsx_collection_item()' in order",
-      "to create a valid 'xlsx_collection_item' class object."
+      "Please use the function 'new_xlsxcollection_item()' in order",
+      "to create a valid 'xlsxcollection_item' class object."
     )
   )
-  if (isTRUE(validate_class) && !"xlsx_collection_item" %in% class(obj))
-    err_h("The passed in object is not of class 'xlsx_collection_item'.")
+  if (isTRUE(validate_class) && !"xlsxcollection_item" %in% class(obj))
+    err_h("The passed in object is not of class 'xlsxcollection_item'.")
   if (!is.list(obj))
     err_h("The object is not a list.")
   missing_entries <- c("st", "caption", "sheet_name")
@@ -89,65 +89,65 @@ validate_xlsx_collection_item <- function(
   obj
 }
 
-#' Create an `xlsx_collection_list` class object.
+#' Create an `xlsxcollection_list` class object.
 #' 
 #' Bundles mutliple
-#' [xlsx_collection_item][new_xlsx_collection_item()] into a single
-#' object of class `xlsx_collection_list`.
+#' [xlsxcollection_item][new_xlsxcollection_item()] into a single
+#' object of class `xlsxcollection_list`.
 #' @param obj One can eather pass a list of items or a singe item.
-#' @param ... additional [xlsx_collection_item][new_xlsx_collection_item()] class objects.
-#' @return A `xlsx_collection_list` class object holding all items.
+#' @param ... additional [xlsxcollection_item][new_xlsxcollection_item()] class objects.
+#' @return A `xlsxcollection_list` class object holding all items.
 #' @export
-new_xlsx_collection_list <- function(obj, ...) {
-  UseMethod("new_xlsx_collection_list")
+new_xlsxcollection_list <- function(obj, ...) {
+  UseMethod("new_xlsxcollection_list")
 }
 
 #' @export
-new_xlsx_collection_list.xlsx_collection_item <- function(obj, ...) {
+new_xlsxcollection_list.xlsxcollection_item <- function(obj, ...) {
   obj <- c(
     list(obj),
     list(...)
   ) %>%
-    new_xlsx_collection_list
+    new_xlsxcollection_list
 }
 
 #' @export
-new_xlsx_collection_list.default <- function(obj, ...) {
-  validate_xlsx_collection_list(
+new_xlsxcollection_list.default <- function(obj, ...) {
+  validate_xlsxcollection_list(
     obj,
     validate_class = FALSE,
-    err_h = composerr("Error while calling 'new_xlsx_collection_list()'.")
+    err_h = composerr("Error while calling 'new_xlsxcollection_list()'.")
   ) %>%
-    structure(class = "xlsx_collection_list")  
+    structure(class = "xlsxcollection_list")  
 }
 
-#' Validate the [xlsx_collection_list][new_xlsx_collection_list()] class object
+#' Validate the [xlsxcollection_list][new_xlsxcollection_list()] class object
 #' 
 #' @param obj The object, which should be validated.
 #' @param validate_class A logical flag, defining if the class string should
 #'   also be evaluated.
 #' @param err_h An error handling function.
-validate_xlsx_collection_list <- function(
+validate_xlsxcollection_list <- function(
   obj,
   validate_class = TRUE,
-  err_h = composerr("Invalid 'xlsx_collection_list'")
+  err_h = composerr("Invalid 'xlsxcollection_list'")
 ) {
   err_h <- composerr(
     err_prior = err_h,
-    text_1 = "The passed in object is not a valid 'xlsx_collection_list' class object",
+    text_1 = "The passed in object is not a valid 'xlsxcollection_list' class object",
     text_2 = paste(
-      "Please use the function 'new_xlsx_collection()' in order",
-      "to create a valid 'xlsx_collection' class object."
+      "Please use the function 'new_xlsxcollection()' in order",
+      "to create a valid 'xlsxcollection' class object."
     )
   )
-  if (isTRUE(validate_class) && !"xlsx_collection_list" %in% class(obj))
-    err_h("The passed in object is not of class 'xlsx_collection_list'.")
+  if (isTRUE(validate_class) && !"xlsxcollection_list" %in% class(obj))
+    err_h("The passed in object is not of class 'xlsxcollection_list'.")
   if (!is.list(obj))
     err_h("The object is not a list.")
   lapply(
     seq_along(obj),
     function(i) {
-      validate_xlsx_collection_item(
+      validate_xlsxcollection_item(
         obj = obj[[i]],
         err_h = paste(
           "The list entry at index ", stringify(i), "is invalid."

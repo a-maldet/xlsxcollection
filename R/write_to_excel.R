@@ -5,8 +5,8 @@ NULL
 #'
 #' This function writes the read tables to an xlsx file.
 #' @param xlsx_path File path of the xlsx file.
-#' @param xlsx_collection_list A [xlsx_collection_list][new_xlsx_collection_list()]
-#'   class object, usually created by [xlsx_collection_read_stored_tables()].
+#' @param xlsxcollection_list A [xlsxcollection_list][new_xlsxcollection_list()]
+#'   class object, usually created by [xlsxcollection_read_stored_tables()].
 #' @param toc_caption An optional string used as caption for the table of contents.
 #' @param toc_format An optional function applying `styledTables` formatting
 #'   commands to the [StyledTable][styledTables::styled_table()] class object
@@ -16,14 +16,14 @@ NULL
 #'   should have a table of contents as first sheet.
 #' @return The file path given in `xlsx_path`.
 #' @export
-#' @seealso [xlsx_collection_list_stored_tables()],
-#'   [xlsx_collection_init_store_table()],
-#'   [xlsx_collection_read_stored_tables()],
-#'   [xlsx_collection_use_latex_table_counter()],
-#'   [xlsx_collection_append_table()],
-#'   [xlsx_collection_append_toc()]
-xlsx_collection_create_excel <- function(
-  xlsx_collection_list,
+#' @seealso [xlsxcollection_list_stored_tables()],
+#'   [xlsxcollection_init_store_table()],
+#'   [xlsxcollection_read_stored_tables()],
+#'   [xlsxcollection_use_latex_table_counter()],
+#'   [xlsxcollection_append_table()],
+#'   [xlsxcollection_append_toc()]
+xlsxcollection_create_excel <- function(
+  xlsxcollection_list,
   xlsx_path,
   toc_caption = NULL,
   toc_format = NULL,
@@ -31,16 +31,16 @@ xlsx_collection_create_excel <- function(
 ) {
   wb <- xlsx::createWorkbook()
   if (isTRUE(toc_include))
-    xlsx_collection_append_toc(
+    xlsxcollection_append_toc(
       wb,
-      xlsx_collection_list = xlsx_collection_list,
+      xlsxcollection_list = xlsxcollection_list,
       toc_caption = toc_caption,
       toc_format = toc_format
     )
   lapply(
-    xlsx_collection_list,
+    xlsxcollection_list,
     function(x) {
-      xlsx_collection_append_table(
+      xlsxcollection_append_table(
         wb = wb,
         sheet_name = x$sheet_name,
         st = x$st,
@@ -53,7 +53,7 @@ xlsx_collection_create_excel <- function(
   xlsx_path
 }
 
-#' Append a [xlsx_collection_item][new_xlsx_collection_item()]
+#' Append a [xlsxcollection_item][new_xlsxcollection_item()]
 #' class object to an [xlsx-workbook][xlsx::createWorkbook()]
 #' 
 #' @param wb An [xlsx-workbook][xlsx::createWorkbook()]
@@ -62,13 +62,13 @@ xlsx_collection_create_excel <- function(
 #' @param caption A string used as table caption.
 #' @param footer An optional string used as table footer.
 #' @export
-#' @seealso [xlsx_collection_list_stored_tables()],
-#'   [xlsx_collection_init_store_table()],
-#'   [xlsx_collection_read_stored_tables()],
-#'   [xlsx_collection_use_latex_table_counter()],
-#'   [xlsx_collection_create_excel()],
-#'   [xlsx_collection_append_toc()]
-xlsx_collection_append_table <- function(
+#' @seealso [xlsxcollection_list_stored_tables()],
+#'   [xlsxcollection_init_store_table()],
+#'   [xlsxcollection_read_stored_tables()],
+#'   [xlsxcollection_use_latex_table_counter()],
+#'   [xlsxcollection_create_excel()],
+#'   [xlsxcollection_append_toc()]
+xlsxcollection_append_table <- function(
   wb,
   sheet_name,
   st,
@@ -107,20 +107,20 @@ xlsx_collection_append_table <- function(
 #' Append a table of contents sheet to the xlsx collection file
 #' 
 #' @param wb An [xlsx-workbook][xlsx::createWorkbook()]
-#' @param xlsx_collection_list An 
-#'   [xlsx_collection_list][new_xlsx_collection_list()] class object holding
+#' @param xlsxcollection_list An 
+#'   [xlsxcollection_list][new_xlsxcollection_list()] class object holding
 #'   the stored tables.
-#' @inheritParams xlsx_collection_create_excel
+#' @inheritParams xlsxcollection_create_excel
 #' @export
-#' @seealso [xlsx_collection_list_stored_tables()],
-#'   [xlsx_collection_init_store_table()],
-#'   [xlsx_collection_read_stored_tables()],
-#'   [xlsx_collection_use_latex_table_counter()],
-#'   [xlsx_collection_create_excel()],
-#'   [xlsx_collection_append_table()]
-xlsx_collection_append_toc <- function(
+#' @seealso [xlsxcollection_list_stored_tables()],
+#'   [xlsxcollection_init_store_table()],
+#'   [xlsxcollection_read_stored_tables()],
+#'   [xlsxcollection_use_latex_table_counter()],
+#'   [xlsxcollection_create_excel()],
+#'   [xlsxcollection_append_table()]
+xlsxcollection_append_toc <- function(
   wb,
-  xlsx_collection_list,
+  xlsxcollection_list,
   toc_caption = NULL,
   toc_format = NULL
 ) {
@@ -144,8 +144,8 @@ xlsx_collection_append_toc <- function(
     set_excel_col_width(8, col_id = 1) %>%
     write_excel(toc_sheet, .)
   data.frame(
-    sheet_name = lapply(xlsx_collection_list, `[[`, "sheet_name") %>% unlist,
-    caption = lapply(xlsx_collection_list, `[[`, "caption") %>% unlist
+    sheet_name = lapply(xlsxcollection_list, `[[`, "sheet_name") %>% unlist,
+    caption = lapply(xlsxcollection_list, `[[`, "caption") %>% unlist
   ) %>%
     styled_table %>%
     set_excel_font_name("Arial") %>%
@@ -162,9 +162,9 @@ xlsx_collection_append_toc <- function(
     write_excel(toc_sheet, ., first_row = 3)
   rows <- xlsx::getRows(
     toc_sheet,
-    rowIndex = 2 + seq_along(xlsx_collection_list)
+    rowIndex = 2 + seq_along(xlsxcollection_list)
   )
-  for(i in seq_along(xlsx_collection_list)) {
+  for(i in seq_along(xlsxcollection_list)) {
     rows <- xlsx::getRows(
       toc_sheet,
       rowIndex = 2 + i
@@ -176,7 +176,7 @@ xlsx_collection_append_toc <- function(
       "createHyperlink",
       java_link_doc
     )
-    rJava::.jcall(java_link, "V", "setAddress", sprintf("'%s'!A1", xlsx_collection_list[[i]]$sheet_name))
+    rJava::.jcall(java_link, "V", "setAddress", sprintf("'%s'!A1", xlsxcollection_list[[i]]$sheet_name))
     rJava::.jcall(
       obj = cell[[1]],
       returnSig = "V",
