@@ -1,4 +1,4 @@
-#' @import tlscomposerr magrittr styledTables tlsgeneralutils
+#' @import tinytools magrittr styledTables
 NULL
 
 utils::globalVariables(".")

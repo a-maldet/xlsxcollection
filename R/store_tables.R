@@ -26,9 +26,8 @@ NULL
 #'   [xlsxcollection_create_excel()]
 #' @export
 xlsxcollection_init_store_table <- function(storage_dir) {
-  restrict_fn_environment(
-    vars = "storage_dir",
-    fn = function(st, sheet_name, caption, footer = NULL) {
+  restrict_fn_env(
+    function(st, sheet_name, caption, footer = NULL) {
       if (!dir.exists(storage_dir))
         dir.create(storage_dir)
       list(
@@ -38,7 +37,8 @@ xlsxcollection_init_store_table <- function(storage_dir) {
         footer = footer
       ) %>%
         saveRDS(file = file.path(storage_dir, paste0(sheet_name, ".rds")))
-    }
+    },
+    vars = "storage_dir",
   )
 }
 
@@ -70,7 +70,7 @@ xlsxcollection_list_stored_tables <- function(
 #'   [xlsxcollection_use_latex_table_counter()],
 #'   [xlsxcollection_create_excel()]
 xlsxcollection_read_stored_tables <- function(stored_tables) {
-  err_h = composerr("Error while calling 'xlsxcollection_read_stored_tables()'")
+  err_h <- composerr("Error while calling 'xlsxcollection_read_stored_tables()'")
   lapply(
     stored_tables,
     function(file_path) {
@@ -112,7 +112,7 @@ xlsxcollection_use_latex_table_counter <- function(
   err_h <- composerr("Error while calling 'xlsxcollection_use_latex_table_counter'")
   validate_xlsxcollection_list(
     xlsxcollection_list,
-    err_h = composerr("Passed in 'xlsxcollection_list' is invalid")
+    err_h = composerr("Passed in 'xlsxcollection_list' is invalid", err_h)
   )
   aux_txt <- tryCatch(
     readLines(aux_path, warn = FALSE),
