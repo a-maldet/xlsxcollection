@@ -74,11 +74,17 @@ xlsxcollection_read_stored_tables <- function(stored_tables) {
   lapply(
     stored_tables,
     function(file_path) {
-      tryCatch(
+      obj <- tryCatch(
         readRDS(file_path),
         error = function(e)
           paste0("Could not read file\n\t", stringify(file_path), "\n", "Reason: ", e) %>%
           err_h
+      )
+      new_xlsxcollection_item(
+        st = obj$st,
+        caption = obj$caption,
+        sheet_name = obj$sheet_name,
+        footer = obj$footer
       )
     }
   ) %>%
