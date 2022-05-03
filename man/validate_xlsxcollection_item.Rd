@@ -22,7 +22,7 @@ validate_xlsxcollection_item(
 \item{validate_class}{A logical flag, defining if the class string should
 also be evaluated.}
 
-\item{err_h}{An error handling function.}
+\item{err_h}{An error handler created with \link[composerr:composerr]{composerr}}
 }
 \description{
 Validate the \link[=new_xlsxcollection_item]{xlsxcollection_item} class object

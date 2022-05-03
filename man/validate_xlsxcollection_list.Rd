@@ -16,7 +16,7 @@ validate_xlsxcollection_list(
 \item{validate_class}{A logical flag, defining if the class string should
 also be evaluated.}
 
-\item{err_h}{An error handling function.}
+\item{err_h}{An error handler created with \link[composerr:composerr]{composerr}}
 }
 \description{
 Validate the \link[=new_xlsxcollection_list]{xlsxcollection_list} class object

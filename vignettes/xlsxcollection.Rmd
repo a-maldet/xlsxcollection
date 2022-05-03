@@ -39,7 +39,7 @@ library(xlsxcollection)
 
 # assume we have 3 StyledTable objects
 st1 <- styled_table(matrix(11:13))
-st1 <- styled_table(matrix(21:23))
+st2 <- styled_table(matrix(21:23))
 st3 <- styled_table(matrix(31:33))
 
 # init storage function
@@ -64,8 +64,7 @@ store_st(
   caption = "Deaths since 2010"
 )
 
-cat("Stored files: ")
-cat(xlsxcollection_list_stored_tables("./tables_dir"))
+cat("Stored files:", xlsxcollection_list_stored_tables("./tables_dir"))
 ```
 
 ## Read stored tables and create Excel file

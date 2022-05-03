@@ -26,7 +26,7 @@ NULL
 #'   [xlsxcollection_create_excel()]
 #' @export
 xlsxcollection_init_store_table <- function(storage_dir) {
-  restrict_fn_env(
+  funky::restrict_fn_env(
     function(st, sheet_name, caption, footer = NULL) {
       if (!dir.exists(storage_dir))
         dir.create(storage_dir)

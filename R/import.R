@@ -1,4 +1,4 @@
-#' @import tinytools magrittr styledTables
+#' @import tinytools magrittr styledTables composerr
 NULL
 
 utils::globalVariables(".")

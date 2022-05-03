@@ -42,15 +42,15 @@ new_xlsxcollection_item <- function(
 #' @param obj The object, which should be validated.
 #' @param validate_class A logical flag, defining if the class string should
 #'   also be evaluated.
-#' @param err_h An error handling function.
+#' @param err_h An error handler created with [composerr][composerr::composerr()]
 validate_xlsxcollection_item <- function(
   obj,
   validate_class = TRUE,
   err_h = composerr("Invalid 'xlsxcollection_item'")
 ) {
   err_h <- composerr(
-    err_prior = err_h,
     text_1 = "The passed in object is not a valid 'xlsxcollection_item'",
+    err_h,
     text_2 = paste(
       "Please use the function 'new_xlsxcollection_item()' in order",
       "to create a valid 'xlsxcollection_item' class object."
