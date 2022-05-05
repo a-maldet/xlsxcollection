@@ -7,7 +7,7 @@
 validate_xlsxcollection_list(
   obj,
   validate_class = TRUE,
-  err_h = composerr("Invalid 'xlsxcollection_list'")
+  err_h = composerr("Invalid 'xlsxcollection_list': ")
 )
 }
 \arguments{

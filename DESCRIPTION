@@ -1,7 +1,7 @@
 Package: xlsxcollection
 Type: Package
 Title: Collect All StyledTables Of A Report In A Single Excel File
-Version: 1.2.3
+Version: 1.2.4
 Authors@R: c(person("Adrian", "Maldet", email = "adrian.maldet@tirol.gv.at", role = c("aut", "cre")))
 Maintainers@R: c(person("Adrian", "Maldet", email = "adrian.maldet@tirol.gv.at", role = c("aut", "cre")))
 Description: Creates a single xlsx file holding all styledTables created in a
@@ -15,9 +15,9 @@ Imports:
     xlsx (>= 0.6.5),
     rJava (>= 1.0-4),
     styledTables (>= 2.2.0),
-    funky (>= 1.0.1),
-    composerr (>= 1.0.4),
-    tinytools (>= 1.1.0)
+    funky (>= 1.0.2),
+    composerr (>= 2.0.0),
+    tinytools (>= 2.2.0)
 Suggests: 
     testthat (>= 3.0.0),
     roxygen2 (>= 7.1.1),

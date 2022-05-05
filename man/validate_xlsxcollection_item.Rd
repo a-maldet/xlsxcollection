@@ -7,13 +7,13 @@
 validate_xlsxcollection_item(
   obj,
   validate_class = TRUE,
-  err_h = composerr("Invalid 'xlsxcollection_item'")
+  err_h = composerr("Invalid 'xlsxcollection_item': ")
 )
 
 validate_xlsxcollection_item(
   obj,
   validate_class = TRUE,
-  err_h = composerr("Invalid 'xlsxcollection_item'")
+  err_h = composerr("Invalid 'xlsxcollection_item': ")
 )
 }
 \arguments{

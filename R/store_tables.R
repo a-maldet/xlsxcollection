@@ -70,7 +70,7 @@ xlsxcollection_list_stored_tables <- function(
 #'   [xlsxcollection_use_latex_table_counter()],
 #'   [xlsxcollection_create_excel()]
 xlsxcollection_read_stored_tables <- function(stored_tables) {
-  err_h <- composerr("Error while calling 'xlsxcollection_read_stored_tables()'")
+  err_h <- composerr("Error while calling 'xlsxcollection_read_stored_tables()': ")
   lapply(
     stored_tables,
     function(file_path) {
@@ -115,10 +115,10 @@ xlsxcollection_use_latex_table_counter <- function(
   xlsxcollection_list,
   aux_path
 ) {
-  err_h <- composerr("Error while calling 'xlsxcollection_use_latex_table_counter'")
+  err_h <- composerr("Error while calling 'xlsxcollection_use_latex_table_counter': ")
   validate_xlsxcollection_list(
     xlsxcollection_list,
-    err_h = composerr("Passed in 'xlsxcollection_list' is invalid", err_h)
+    err_h = composerr("Passed in 'xlsxcollection_list' is invalid: ", err_h)
   )
   aux_txt <- tryCatch(
     readLines(aux_path, warn = FALSE),
