@@ -52,7 +52,7 @@ validate_xlsxcollection_item <- function(
     before = "The passed in object is not a valid 'xlsxcollection_item': ",
     err_h,
     after = paste(
-      ": Please use the function 'new_xlsxcollection_item()' in order",
+      "\nPlease use the function 'new_xlsxcollection_item()' in order",
       "to create a valid 'xlsxcollection_item' class object."
     )
   )
@@ -65,7 +65,7 @@ validate_xlsxcollection_item <- function(
   if (length(missing_entries) > 0)
     paste(
       "The object is missing the following list entries:\n",
-      stringify(missing_entries, collapse = "\n", before = "\t", new_line = TRUE)
+      stringify(missing_entries, collapse = "\n", before = "  ")
     ) %>%
     err_h
   non_char_entries <- intersect(c("caption", "sheet_name", "footer"), names(obj))
@@ -81,7 +81,7 @@ validate_xlsxcollection_item <- function(
   if (length(non_char_entries) > 0) 
     paste(
       "The following entries should be strings, but are not:\n",
-      stringify(non_char_entries, collapse = "\n", before = "\t", new_line = TRUE)
+      stringify(non_char_entries, collapse = "\n", before = "  ")
     ) %>%
     err_h
   if (!"StyledTable" %in% class(obj$st))
@@ -136,7 +136,7 @@ validate_xlsxcollection_list <- function(
     before = "The passed in object is not a valid 'xlsxcollection_list' class object: ",
     err_h,
     after = paste(
-      ": Please use the function 'new_xlsxcollection()' in order",
+      "\nPlease use the function 'new_xlsxcollection()' in order",
       "to create a valid 'xlsxcollection' class object."
     )
   )
